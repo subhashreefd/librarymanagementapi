@@ -20,7 +20,7 @@ API CALLS FOR AUTHORS
 		"category": "novel"
 	 }
    }
-   
+
 4) To update author
     PUT /authors/id
 
@@ -36,6 +36,7 @@ API CALLS FOR AUTHORS
 
 5) To delete an author
     DELETE /authors/id
+
 --------------------------------------------------------------------------------
 API CALLS FOR BOOKS
 --------------------------------------------------------------------------------
@@ -73,6 +74,7 @@ API CALLS FOR BOOKS
 
 5) To delete an author
     DELETE /books/id
+
 --------------------------------------------------------------------------------
 API CALLS FOR BORROWERS(USER)
 --------------------------------------------------------------------------------
@@ -108,6 +110,7 @@ API CALLS FOR BORROWERS(USER)
 
 5) To delete an author
     DELETE /borrowers/id
+    
 --------------------------------------------------------------------------------
 API CALLS FOR BOOKINGS
 --------------------------------------------------------------------------------
