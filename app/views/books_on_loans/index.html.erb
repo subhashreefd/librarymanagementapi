@@ -1,0 +1,25 @@
+<h1>Listing books_on_loans</h1>
+
+<table>
+  <tr>
+    <th>Book</th>
+    <th>Borrower</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @books_on_loans.each do |books_on_loan| %>
+  <tr>
+    <td><%= books_on_loan.book_id %></td>
+    <td><%= books_on_loan.borrower_id %></td>
+    <td><%= link_to 'Show', books_on_loan %></td>
+    <td><%= link_to 'Edit', edit_books_on_loan_path(books_on_loan) %></td>
+    <td><%= link_to 'Destroy', books_on_loan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Books on loan', new_books_on_loan_path %>

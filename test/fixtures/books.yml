@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  author: MyString
+  title: MyString
+  isbn: MyString
+  onloan: 1
+  count: 1
+
+two:
+  author: MyString
+  title: MyString
+  isbn: MyString
+  onloan: 1
+  count: 1
