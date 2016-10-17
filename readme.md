@@ -20,6 +20,7 @@ API CALLS FOR AUTHORS
 		"category": "novel"
 	 }
    }
+   
 4) To update author
     PUT /authors/id
 
@@ -32,6 +33,7 @@ API CALLS FOR AUTHORS
 		"category": "novel"
 	  }
     }
+
 5) To delete an author
     DELETE /authors/id
 --------------------------------------------------------------------------------
@@ -91,6 +93,7 @@ API CALLS FOR BORROWERS(USER)
                    "name" : "yy"
                  }
     }
+
 4) To update author
     PUT /borrowers/id
 
@@ -102,6 +105,7 @@ API CALLS FOR BORROWERS(USER)
                    "name" : "yy"
                  }
     }
+
 5) To delete an author
     DELETE /borrowers/id
 --------------------------------------------------------------------------------
@@ -126,6 +130,7 @@ API CALLS FOR BOOKINGS
            "borrower_id":"1"
       }
    }
+
 4) To return the book loaned
     POST /books_on_loans/checkin
 
