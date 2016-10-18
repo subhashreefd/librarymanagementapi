@@ -58,7 +58,6 @@ RSpec.describe BooksController, :type => :controller  do
   describe "POST /books" do
     
     a = Author.create(:name => "Test name2 for book", :category => "Test category1 for book") 
-    puts(a.inspect)
     it "creates a book" do
       book_params = {
         "book" => {
@@ -66,8 +65,7 @@ RSpec.describe BooksController, :type => :controller  do
           "category" => "Test create category",
           "count" => "10",
           "onloan" => "1",
-          "author_name" => a.name,  
-          "author_id" => a.id
+          "author_name" => a.name
         }
       }
 
@@ -87,6 +85,33 @@ RSpec.describe BooksController, :type => :controller  do
      
     end
 
+    it "creates an author if not present before creating book" do
+       
+      book_params = {
+        "book" => {
+          "title" => "Test create1 book",
+          "category" => "Test create category",
+          "count" => "10",
+          "onloan" => "1",
+          "author_name" => "xxx"
+        }
+      }
+
+      request_headers = {
+        "Accept" => "application/json",
+        "Content-Type" => "application/json"
+      }
+
+      before_count = Book.count
+      post :create, book_params
+      
+      before_count = before_count + 1
+      after_count = Book.count
+      expect(before_count).to eq after_count
+      expect(Book.first.title).to eq "Test create1 book"
+    end
+
+
     it "if book already exist count should_not be changed" do
       book_params = {
         "book" => {
@@ -94,8 +119,7 @@ RSpec.describe BooksController, :type => :controller  do
           "category" => "Test create category",
           "count" => "20",
           "onloan" => "1",
-          "author_name" => a.name,  
-          "author_id" => a.id
+          "author_name" => a.name
         }
       }
      

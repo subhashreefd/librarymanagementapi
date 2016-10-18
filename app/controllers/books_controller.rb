@@ -47,10 +47,12 @@ class BooksController < ApplicationController
        @book = Book.find(@booktitle.id)
        @book.count = @book.count + book_params[:count].to_i
     else
-       @book = Book.new(book_params)
-       if !(@book.author_id.present?)
-          @book.author_id = Author.find_by_name(book_params[:author_name]).id
+       if !(Author.where(:name => book_params[:author_name]).present?)
+           @author = Author.create(:name => book_params[:author_name],
+                                   :category => book_params[:category])
        end
+       @book = Book.new(book_params)
+       @book.author_id = Author.find_by_name(book_params[:author_name]).id
     end
 
     
