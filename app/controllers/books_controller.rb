@@ -40,10 +40,20 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    @book = Book.new(book_params)
-    if !(@book.author_id.present?)
-       @book.author_id = Author.find_by_name(book_params[:author_name]).id
+  
+    
+    @booktitle = Book.find_by_title(book_params[:title])
+    if Book.where(:title => book_params[:title]).present?
+       @book = Book.find(@booktitle.id)
+       @book.count = @book.count + book_params[:count].to_i
+    else
+       @book = Book.new(book_params)
+       if !(@book.author_id.present?)
+          @book.author_id = Author.find_by_name(book_params[:author_name]).id
+       end
     end
+
+    
     respond_to do |format|
     if @book.save
         

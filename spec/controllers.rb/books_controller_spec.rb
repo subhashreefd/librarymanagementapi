@@ -83,11 +83,46 @@ RSpec.describe BooksController, :type => :controller  do
       after_count = Book.count
       expect(before_count).to eq after_count
       expect(Book.first.title).to eq "Test create book"
-      expect {
-        post :create, book_params
-      }.to change(Book, :count).by(1)
+
+     
     end
- 
+
+    it "if book already exist count should_not be changed" do
+      book_params = {
+        "book" => {
+          "title" => "Test create book",
+          "category" => "Test create category",
+          "count" => "20",
+          "onloan" => "1",
+          "author_name" => a.name,  
+          "author_id" => a.id
+        }
+      }
+     
+      request_headers = {
+        "Accept" => "application/json",
+        "Content-Type" => "application/json"
+      }
+
+     
+      post :create, book_params
+      before_count = Book.count
+      book_params = {
+        "book" => {
+          "title" => "Test create book",
+          "category" => "Test create category",
+          "count" => "25",
+          "onloan" => "1",
+          "author_name" => a.name,  
+          "author_id" => a.id
+        }
+      }
+
+      post :create, book_params
+      after_count = Book.count
+      expect(before_count).to eq after_count
+      expect(Book.first.count).to eq 45
+    end
   end
 
   describe "DELETE /books/:id" do
