@@ -42,7 +42,6 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     if !(@book.author_id.present?)
-      puts("not present")
        @book.author_id = Author.find_by_name(book_params[:author_name]).id
     end
     respond_to do |format|

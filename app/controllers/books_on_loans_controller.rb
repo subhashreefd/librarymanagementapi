@@ -68,14 +68,16 @@ class BooksOnLoansController < ApplicationController
     end
   end
 
-
+  # Borrow book
   def check_out
     @details = params[:detail]
     @book = Book.find_by_title(@details[:book_name])
     @borrower = Borrower.find_by_id(@details[:borrower_id])
-    @book_count = @book.count
-    if @borrower != nil
-        checking =  BooksOnLoan.where("book_id = ? AND borrower_id = ?", @book.id,@borrower.id)
+    
+    if @borrower != nil and @book != nil
+        @book_count = @book.count
+        checking =  BooksOnLoan.where("book_id = ? AND borrower_id = ?", @book.id,
+                                       @borrower.id)
         if @book == nil
             result = {"status" => "No Such Book"} 
         elsif  @book != nil and @book_count == 0 
@@ -99,11 +101,13 @@ class BooksOnLoansController < ApplicationController
         end
     elsif @borrower == nil
         result = {"status" => "No Such Borrower"}
+    elsif @book == nil
+        result = {"status" => "No Such Book available"}
     end
     render json: result.to_json
   end
 
-
+  # Return book
   def check_in
     @details = params[:detail]
     booking_id = @details[:booking_id]

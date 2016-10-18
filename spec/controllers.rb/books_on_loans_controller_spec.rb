@@ -8,14 +8,16 @@ RSpec.describe BooksOnLoansController, :type => :controller  do
   bo = Borrower.create(name: "Example User", email: "user@example.com")
   
   describe "get index'" do
+    
     l = BooksOnLoan.create(book_id: b.id, borrower_id: bo.id, 
                        DateOfIssue: Date.today, DateOfReturn: Date.today + 6)
     dateToday = Date.today.to_s
     # puts(dateToday)
     date = Date.parse(dateToday)
     formatted_date = date.strftime('%a, %d %b %Y')
-    let!(:loan_post) {BooksOnLoan.create(book_id: b.id, borrower_id: bo.id, 
-                       DateOfIssue: Date.today.strftime('%a, %d %b %Y'), DateOfReturn: Date.today + 6)}
+    let!(:loan_post) { BooksOnLoan.create(book_id: b.id, borrower_id: bo.id, 
+                       DateOfIssue: Date.today.strftime('%a, %d %b %Y'), 
+                       DateOfReturn: Date.today + 6) }
     
     before { get :index, :format => :json }
 
