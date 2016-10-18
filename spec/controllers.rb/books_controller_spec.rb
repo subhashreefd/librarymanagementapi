@@ -149,6 +149,28 @@ RSpec.describe BooksController, :type => :controller  do
     end
   end
 
+
+  describe "PUT /books/:id" do
+
+    it "updates a book" do
+      
+      request.env["HTTP_ACCEPT"] = "application/json"
+      a = Author.create(:name => "Test update for book", 
+                          :category => "Test update for book") 
+      b = Book.create(:count => 10, :category => "Test book2 category", 
+                        :onloan => 1, :title => "test book title", :author_name => a.name, 
+                        :author_id => a.id) 
+
+      request_headers = {
+        "Accept" => "application/json",
+        "Content-Type" => "application/json"
+      }
+        put :update, :id => b.id, book: {:count => 2}
+        b.reload.count.should == 2
+
+     end
+  end
+
   describe "DELETE /books/:id" do
     it "deletes a book" do
         a = Author.create(:name => "Test name2 for book", 

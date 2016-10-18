@@ -62,13 +62,28 @@ RSpec.describe BorrowersController, :type => :controller  do
       
       before_count = before_count + 1
       after_count = Borrower.count
-      puts(after_count)
       expect(before_count).to eq after_count
       expect(Borrower.first.name).to eq "Test create name"
     end
      
   end
 
+  describe "PUT /borrowers/:id" do
+
+    it "updates an author" do
+      
+      request.env["HTTP_ACCEPT"] = "application/json"
+      bo = Borrower.create(:name => "Test update name", :email => "email@example.com")
+      request_headers = {
+        "Accept" => "application/json",
+        "Content-Type" => "application/json"
+      }
+        put :update, :id => bo.id, borrower: {:email => "test@testmail.com"}
+        bo.reload.email.should == "test@testmail.com"
+
+     end
+  end
+ 
 
    describe "DELETE /borrowers/:id" do
     it "deletes a borrower" do

@@ -90,55 +90,29 @@ RSpec.describe AuthorsController, :type => :controller  do
        expect {
          delete :destroy, :id => a.id
        }.to change(Author, :count).by(-1)
-
+      a1 = Author.create(:name => "Test name2", :category => "Test category2")
+      b = Book.create(:count => 10, :category => "Test book2 category", 
+                        :onloan => 1, :title => "test book title", :author_name => a1.name, 
+                        :author_id => a1.id) 
+      expect{ a1.destroy}.to change{ Book.count}.by(-1)      
     end
-
   end
 
-  # describe "should update article" do
-  # authors = Author.create(:name => "Test name", :category => "Test category") 
+  describe "PUT /authors/:id" do
 
- 
-  # put :update, :id => authors.id, params: { author: { name: "updated" } }
- 
-  
-  # # Reload association to fetch updated data and assert that title is updated.
-  # author.reload
-  # assert_equal "updated", author.name
-
-
-  # describe "PUT /authors/:id" do
-
-  #   it "creates an author" do
+    it "updates an author" do
       
-  #     request.env["HTTP_ACCEPT"] = "application/json"
-  #     a = Author.create(:name => "Test name", :category => "Test category1")
-      
-  #     author_params = {
-  #       "author" => {
-  #         "name" => "Test put name",
-         
-  #       }
-  #     }
+      request.env["HTTP_ACCEPT"] = "application/json"
+      a = Author.create(:name => "Test name", :category => "Test category1")
+    
+      request_headers = {
+        "Accept" => "application/json",
+        "Content-Type" => "application/json"
+      }
+        put :update, :id => a.id, author: {:name => "Test put name"}
+        a.reload.name.should == "Test put name"
 
-  #     request_headers = {
-  #       "Accept" => "application/json",
-  #       "Content-Type" => "application/json"
-  #     }
-  #       puts(a.name)
-
-  #      put :update, :id => a.id, author: attributes_for(author_params)
-  #      a.reload
-  #      puts(a.name)
-  #     # put :update, :id => a.id, author_params
-  #     # expect(a.reload.name).to eq "Test put name"
-  #     # before_count = before_count + 1
-  #     # after_count = Author.count
-  #     # expect(before_count).to eq after_count
-  #     # expect(Author.first.name).to eq "Test create name"
-  #     # expect {
-  #     #   post :create, author_params
-  #     # }.to change(Author, :count).by(1)
-  #   end
-  # end
+     end
+  end
+ 
 end
